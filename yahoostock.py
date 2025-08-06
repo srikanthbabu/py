@@ -1,11 +1,21 @@
+"""
+Helper function to calculate stock valuation
+Author: Srikanth Babu
+Date: 2025-08-06
+"""
 import yfinance as yf
+
+
 def portfolio():
+    """
+    portfolio function
+    """
     stocks = {
-        "APOLLO": 1805, "BEL": 1000, "BHEL": 5000, "BBOX": 700, "BAJAJHFL": 2000,
-        "CRISIL": 50, "ETERNAL": 1200, "HERITGFOOD": 130, "INDIAMART": 100,
-        "INDIGOPNTS": 32, "IREDA": 1500, "IRFC": 1420, "JIOFIN": 1000,
-        "POLICYBZR": 163, "TATAMOTORS": 140, "UJJIVANSFB": 2285,
-        "VIJAYA": 110, "YESBANK": 2265
+        "APOLLO": 1805, "BEL": 1000, "BHEL": 5000, "BBOX": 700,
+        "BAJAJHFL": 2000, "CRISIL": 50, "ETERNAL": 1200, "HERITGFOOD": 130,
+        "INDIAMART": 100, "INDIGOPNTS": 32, "IREDA": 1500, "IRFC": 1420,
+        "JIOFIN": 1000, "POLICYBZR": 163, "TATAMOTORS": 140,
+        "UJJIVANSFB": 2285, "VIJAYA": 110, "YESBANK": 2265
     }
 
     tickers = [key + ".NS" for key in stocks]
@@ -35,10 +45,15 @@ def portfolio():
             value = latest_price * quantity
             portfolio_value += value
 
-            print(f"│ {ticker:<12} │ {latest_price:>8.2f} │ {quantity:>10} │ {value:>10.2f} │")
+            print(
+                f"│ {ticker:<12} │ {latest_price:>8.2f} │ "
+                f"{quantity:>10} │ {value:>10.2f} │"
+            )
 
-        except Exception as e:
-            print(f"│ {ticker:<12} │   ERROR   │            │            │")
+        except ValueError:
+            print(f"│ {ticker:<12} │ VALUE ERROR │            │            │")
+        except KeyError:
+            print(f"│ {ticker:<12} │ KEY ERROR   │            │            │")
 
     print("└──────────────┴──────────┴────────────┴────────────┘")
     print(f"\n💼 Total Portfolio Value: ₹{portfolio_value:,.2f}")
